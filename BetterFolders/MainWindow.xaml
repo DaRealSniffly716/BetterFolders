@@ -173,16 +173,13 @@
                 <ControlTemplate>
                     <!--  Button Visuals  -->
                     <Canvas>
-                        <!--  Button RenderTransform  -->
-                        <Canvas.RenderTransform>
-                            <TranslateTransform x:Name="ArrowTranslateTransform" X="-12" />
-                        </Canvas.RenderTransform>
 
                         <!--  Edge Clip for Button  -->
                         <Canvas.Clip>
                             <RectangleGeometry Rect="0,0,16,36" />
                         </Canvas.Clip>
 
+                        <!--  Button Background  -->
                         <Border
                             Width="16"
                             Height="36"
@@ -190,49 +187,61 @@
                             Background="#77cccccc"
                             BorderBrush="#77cccccc"
                             BorderThickness="1"
-                            CornerRadius="0,5,5,0" />
+                            CornerRadius="0,5,5,0">
+                            <Border.RenderTransform>
+                                <TranslateTransform x:Name="ArrowHolder" X="-12" />
+                            </Border.RenderTransform>
+                        </Border>
+
                         <!--  Arrow Path  -->
                         <Path
                             Margin="-2,0,0,0"
                             HorizontalAlignment="Left"
                             VerticalAlignment="Center"
                             Data="M13,4 L9,4 L5,18 L9,32 L13,32 L9,18 Z"
-                            Fill="#77cccccc" />
+                            Fill="#77cccccc"
+                            RenderTransform="{Binding ElementName=ArrowHolder}" />
+
+                        <!--  Button Hitbox  -->
+                        <Rectangle
+                            Width="16"
+                            Height="36"
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Center"
+                            Fill="Transparent" />
+
                         <ContentPresenter HorizontalAlignment="Left" VerticalAlignment="Center" />
                     </Canvas>
-
                     <!--  Animation and Triggers  -->
                     <ControlTemplate.Triggers>
                         <!--  Hover Trigger  -->
-                        <Trigger Property="IsMouseOver" Value="True">
-                            <Trigger.EnterActions>
-                                <!--  Hover Action  -->
-                                <BeginStoryboard>
-                                    <Storyboard>
-                                        <!--  Button Animation  -->
-                                        <DoubleAnimation
-                                            Storyboard.TargetName="ArrowTranslateTransform"
-                                            Storyboard.TargetProperty="X"
-                                            From="-12"
-                                            To="0"
-                                            Duration="0:0:0.2" />
-                                    </Storyboard>
-                                </BeginStoryboard>
-                            </Trigger.EnterActions>
-                            <Trigger.ExitActions>
-
-                                <BeginStoryboard>
-                                    <Storyboard>
-                                        <DoubleAnimation
-                                            Storyboard.TargetName="ArrowTranslateTransform"
-                                            Storyboard.TargetProperty="X"
-                                            From="0"
-                                            To="-12"
-                                            Duration="0:0:0.2" />
-                                    </Storyboard>
-                                </BeginStoryboard>
-                            </Trigger.ExitActions>
-                        </Trigger>
+                        <EventTrigger RoutedEvent="MouseEnter">
+                            <BeginStoryboard>
+                                <Storyboard>
+                                    <!--  Button Animation  -->
+                                    <DoubleAnimation
+                                        Storyboard.TargetName="ArrowHolder"
+                                        Storyboard.TargetProperty="X"
+                                        From="-12"
+                                        To="0"
+                                        Duration="0:0:0.2" />
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </EventTrigger>
+                        <!--  Leave Trigger  -->
+                        <EventTrigger RoutedEvent="MouseLeave">
+                            <BeginStoryboard>
+                                <Storyboard>
+                                    <!--  Button Animation  -->
+                                    <DoubleAnimation
+                                        Storyboard.TargetName="ArrowHolder"
+                                        Storyboard.TargetProperty="X"
+                                        From="0"
+                                        To="-12"
+                                        Duration="0:0:0.2" />
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </EventTrigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Button.Template>
