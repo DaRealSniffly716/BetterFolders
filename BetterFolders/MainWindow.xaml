@@ -142,6 +142,7 @@
                             <RectangleGeometry Rect="0,0,16,36" />
                         </Canvas.Clip>
 
+                        <!--  Button Background  -->
                         <Border
                             Width="16"
                             Height="36"
@@ -149,16 +150,60 @@
                             Background="#77cccccc"
                             BorderBrush="#77cccccc"
                             BorderThickness="1"
-                            CornerRadius="5,0,0,5" />
+                            CornerRadius="5,0,0,5">
+                            <Border.RenderTransform>
+                                <TranslateTransform x:Name="ArrowHolder" X="12" />
+                            </Border.RenderTransform>
+                        </Border>
+
                         <!--  Arrow Path  -->
                         <Path
                             Margin="2,0,0,0"
                             HorizontalAlignment="Right"
                             VerticalAlignment="Center"
                             Data="M3,4 L7,4 L11,18 L7,32 L3,32 L7,18 Z"
-                            Fill="#77cccccc" />
+                            Fill="#77cccccc"
+                            RenderTransform="{Binding ElementName=ArrowHolder}" />
+
+                        <!--  Button Hitbox  -->
+                        <Rectangle
+                            Width="16"
+                            Height="36"
+                            HorizontalAlignment="Right"
+                            VerticalAlignment="Center"
+                            Fill="Transparent" />
+
                         <ContentPresenter HorizontalAlignment="Right" VerticalAlignment="Center" />
                     </Canvas>
+                    <!--  Animation and Triggers  -->
+                    <ControlTemplate.Triggers>
+                        <!--  Hover Trigger  -->
+                        <EventTrigger RoutedEvent="MouseEnter">
+                            <BeginStoryboard>
+                                <Storyboard>
+                                    <!--  Button Animation  -->
+                                    <DoubleAnimation
+                                        Storyboard.TargetName="ArrowHolder"
+                                        Storyboard.TargetProperty="X"
+                                        To="0"
+                                        Duration="0:0:0.2" />
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </EventTrigger>
+                        <!--  Leave Trigger  -->
+                        <EventTrigger RoutedEvent="MouseLeave">
+                            <BeginStoryboard>
+                                <Storyboard>
+                                    <!--  Button Animation  -->
+                                    <DoubleAnimation
+                                        Storyboard.TargetName="ArrowHolder"
+                                        Storyboard.TargetProperty="X"
+                                        To="12"
+                                        Duration="0:0:0.2" />
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </EventTrigger>
+                    </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Button.Template>
         </Button>
@@ -222,7 +267,6 @@
                                     <DoubleAnimation
                                         Storyboard.TargetName="ArrowHolder"
                                         Storyboard.TargetProperty="X"
-                                        From="-12"
                                         To="0"
                                         Duration="0:0:0.2" />
                                 </Storyboard>
@@ -236,7 +280,6 @@
                                     <DoubleAnimation
                                         Storyboard.TargetName="ArrowHolder"
                                         Storyboard.TargetProperty="X"
-                                        From="0"
                                         To="-12"
                                         Duration="0:0:0.2" />
                                 </Storyboard>
