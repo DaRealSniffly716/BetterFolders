@@ -6,7 +6,7 @@
     - Add page indicator at the bottom.
     - Add animation: (IN PROGRESS)
     + When arrow is hovered, it should slide in from the side. (DONE)
-    + When arrow is clicked, the grid should slide out to the side.
+    + When arrow is clicked, the grid should slide out to the side. (DONE)
     + When app is hovered, the border should become more opaque.
     + When app is hovered, the app should become more transparent.
     + Opposite of the above when not hovered.
@@ -32,11 +32,30 @@
     Topmost="True"
     WindowStyle="None"
     mc:Ignorable="d">
+    <Window.Resources>
+        <!--  Style Resources  -->
+
+        <!--  App Style  -->
+        <Style x:Key="AppStyle" TargetType="Border">
+            <Setter Property="Background" Value="#77cccccc" />
+            <Setter Property="CornerRadius" Value="5" />
+            <Setter Property="Margin" Value="5" />
+            <Setter Property="Padding" Value="24" />
+            <Setter Property="RenderTransform">
+                <Setter.Value>
+                    <TranslateTransform X="0" />
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+
+    <!--  Main Grid  -->
     <Grid>
         <Border
             Padding="15"
             Background="#77777777"
             CornerRadius="20">
+            <!--  App Grid  -->
             <Grid VerticalAlignment="Bottom">
                 <!--  Define Rows  -->
                 <Grid.RowDefinitions>
@@ -54,79 +73,79 @@
 
                 <!--  Define Grid Content  -->
                 <Border
+                    x:Name="App1"
                     Grid.Row="0"
                     Grid.Column="0"
-                    Margin="5"
-                    Padding="24"
-                    Background="#77cccccc"
-                    CornerRadius="5" />
+                    Style="{StaticResource AppStyle}" />
                 <Border
+                    x:Name="App2"
                     Grid.Row="0"
                     Grid.Column="1"
-                    Margin="5"
-                    Padding="24"
-                    Background="#77cccccc"
-                    CornerRadius="5" />
+                    Style="{StaticResource AppStyle}" />
                 <Border
+                    x:Name="App3"
                     Grid.Row="0"
                     Grid.Column="2"
-                    Margin="5"
-                    Padding="24"
-                    Background="#77cccccc"
-                    CornerRadius="5" />
+                    Style="{StaticResource AppStyle}" />
                 <Border
                     Grid.Row="1"
                     Grid.Column="0"
-                    Margin="5"
-                    Padding="24"
-                    Background="#77cccccc"
-                    CornerRadius="5" />
+                    Style="{StaticResource AppStyle}">
+                    <Border.RenderTransform>
+                        <TranslateTransform X="{Binding Path=RenderTransform.(TranslateTransform.X), ElementName=App1}" />
+                    </Border.RenderTransform>
+                </Border>
                 <Border
                     Grid.Row="1"
                     Grid.Column="1"
-                    Margin="5"
-                    Padding="24"
-                    Background="#77cccccc"
-                    CornerRadius="5" />
+                    Style="{StaticResource AppStyle}">
+                    <Border.RenderTransform>
+                        <TranslateTransform X="{Binding Path=RenderTransform.(TranslateTransform.X), ElementName=App2}" />
+                    </Border.RenderTransform>
+                </Border>
                 <Border
                     Grid.Row="1"
                     Grid.Column="2"
-                    Margin="5"
-                    Padding="24"
-                    Background="#77cccccc"
-                    CornerRadius="5" />
+                    Style="{StaticResource AppStyle}">
+                    <Border.RenderTransform>
+                        <TranslateTransform X="{Binding Path=RenderTransform.(TranslateTransform.X), ElementName=App3}" />
+                    </Border.RenderTransform>
+                </Border>
                 <Border
                     Grid.Row="2"
                     Grid.Column="0"
-                    Margin="5"
-                    Padding="24"
-                    Background="#77cccccc"
-                    CornerRadius="5" />
+                    Style="{StaticResource AppStyle}">
+                    <Border.RenderTransform>
+                        <TranslateTransform X="{Binding Path=RenderTransform.(TranslateTransform.X), ElementName=App1}" />
+                    </Border.RenderTransform>
+                </Border>
                 <Border
                     Grid.Row="2"
                     Grid.Column="1"
-                    Margin="5"
-                    Padding="24"
-                    Background="#77cccccc"
-                    CornerRadius="5" />
+                    Style="{StaticResource AppStyle}">
+                    <Border.RenderTransform>
+                        <TranslateTransform X="{Binding Path=RenderTransform.(TranslateTransform.X), ElementName=App2}" />
+                    </Border.RenderTransform>
+                </Border>
                 <Border
                     Grid.Row="2"
                     Grid.Column="2"
-                    Margin="5"
-                    Padding="24"
-                    Background="#77cccccc"
-                    CornerRadius="5" />
+                    Style="{StaticResource AppStyle}">
+                    <Border.RenderTransform>
+                        <TranslateTransform X="{Binding Path=RenderTransform.(TranslateTransform.X), ElementName=App3}" />
+                    </Border.RenderTransform>
+                </Border>
             </Grid>
         </Border>
 
         <!--  Search Box  -->
-        <Border Margin="21,1,21,1" VerticalAlignment="Top">
-            <TextBox
-                Background="#99000000"
-                FontSize="12"
-                Foreground="White"
-                Text="Goober!" />
-        </Border>
+        <TextBox
+            Margin="21,1,21,1"
+            VerticalAlignment="Top"
+            Background="#99000000"
+            FontSize="12"
+            Foreground="White"
+            Text="Goober!" />
 
         <!--  Right Arrow  -->
         <Button
@@ -206,6 +225,43 @@
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Button.Template>
+
+            <!--  Button Action  -->
+            <Button.Triggers>
+                <EventTrigger RoutedEvent="Button.Click">
+                    <BeginStoryboard>
+                        <Storyboard>
+                            <!--  Slide Animation for App Grid  -->
+                            <DoubleAnimationUsingKeyFrames Storyboard.TargetName="App1" Storyboard.TargetProperty="RenderTransform.(TranslateTransform.X)">
+                                <!--  Slide to the side  -->
+                                <LinearDoubleKeyFrame KeyTime="0:0:0.2" Value="-80" />
+                                <!--  Jump to the other side  -->
+                                <DiscreteDoubleKeyFrame KeyTime="0:0:0.201" Value="188" />
+                                <!--  Slide back to the original position  -->
+                                <LinearDoubleKeyFrame KeyTime="0:0:0.67" Value="0" />
+                            </DoubleAnimationUsingKeyFrames>
+
+                            <DoubleAnimationUsingKeyFrames Storyboard.TargetName="App2" Storyboard.TargetProperty="RenderTransform.(TranslateTransform.X)">
+                                <!--  Slide to the side  -->
+                                <LinearDoubleKeyFrame KeyTime="0:0:0.335" Value="-134" />
+                                <!--  Jump to the other side  -->
+                                <DiscreteDoubleKeyFrame KeyTime="0:0:0.336" Value="134" />
+                                <!--  Slide back to the original position  -->
+                                <LinearDoubleKeyFrame KeyTime="0:0:0.67" Value="0" />
+                            </DoubleAnimationUsingKeyFrames>
+
+                            <DoubleAnimationUsingKeyFrames Storyboard.TargetName="App3" Storyboard.TargetProperty="RenderTransform.(TranslateTransform.X)">
+                                <!--  Slide to the side  -->
+                                <LinearDoubleKeyFrame KeyTime="0:0:0.47" Value="-188" />
+                                <!--  Jump to the other side  -->
+                                <DiscreteDoubleKeyFrame KeyTime="0:0:0.471" Value="80" />
+                                <!--  Slide back to the original position  -->
+                                <LinearDoubleKeyFrame KeyTime="0:0:0.67" Value="0" />
+                            </DoubleAnimationUsingKeyFrames>
+                        </Storyboard>
+                    </BeginStoryboard>
+                </EventTrigger>
+            </Button.Triggers>
         </Button>
 
         <!--  Left Arrow  -->
@@ -288,6 +344,43 @@
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Button.Template>
+
+            <!--  Button Action  -->
+            <Button.Triggers>
+                <EventTrigger RoutedEvent="Button.Click">
+                    <BeginStoryboard>
+                        <Storyboard>
+                            <!--  Slide Animation for App Grid  -->
+                            <DoubleAnimationUsingKeyFrames Storyboard.TargetName="App1" Storyboard.TargetProperty="RenderTransform.(TranslateTransform.X)">
+                                <!--  Slide to the side  -->
+                                <LinearDoubleKeyFrame KeyTime="0:0:0.47" Value="188" />
+                                <!--  Jump to the other side  -->
+                                <DiscreteDoubleKeyFrame KeyTime="0:0:0.471" Value="-80" />
+                                <!--  Slide back to the original position  -->
+                                <LinearDoubleKeyFrame KeyTime="0:0:0.67" Value="0" />
+                            </DoubleAnimationUsingKeyFrames>
+
+                            <DoubleAnimationUsingKeyFrames Storyboard.TargetName="App2" Storyboard.TargetProperty="RenderTransform.(TranslateTransform.X)">
+                                <!--  Slide to the side  -->
+                                <LinearDoubleKeyFrame KeyTime="0:0:0.335" Value="134" />
+                                <!--  Jump to the other side  -->
+                                <DiscreteDoubleKeyFrame KeyTime="0:0:0.336" Value="-134" />
+                                <!--  Slide back to the original position  -->
+                                <LinearDoubleKeyFrame KeyTime="0:0:0.67" Value="0" />
+                            </DoubleAnimationUsingKeyFrames>
+
+                            <DoubleAnimationUsingKeyFrames Storyboard.TargetName="App3" Storyboard.TargetProperty="RenderTransform.(TranslateTransform.X)">
+                                <!--  Slide to the side  -->
+                                <LinearDoubleKeyFrame KeyTime="0:0:0.2" Value="80" />
+                                <!--  Jump to the other side  -->
+                                <DiscreteDoubleKeyFrame KeyTime="0:0:0.201" Value="-188" />
+                                <!--  Slide back to the original position  -->
+                                <LinearDoubleKeyFrame KeyTime="0:0:0.67" Value="0" />
+                            </DoubleAnimationUsingKeyFrames>
+                        </Storyboard>
+                    </BeginStoryboard>
+                </EventTrigger>
+            </Button.Triggers>
         </Button>
     </Grid>
     <!--  End of Main Grid  -->
