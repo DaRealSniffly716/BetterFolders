@@ -26,9 +26,12 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     Title="MainWindow"
     Width="204"
-    Height="218"
+    Height="290"
+    AllowDrop="True"
     AllowsTransparency="True"
     Background="Transparent"
+    DragOver="Window_DragOver"
+    Drop="Window_Drop"
     Topmost="True"
     WindowStyle="None"
     mc:Ignorable="d">
@@ -46,6 +49,19 @@
                     <TranslateTransform X="0" />
                 </Setter.Value>
             </Setter>
+        </Style>
+
+        <!--  App Text Style  -->
+        <Style x:Key="AppTextStyle" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="9" />
+            <Setter Property="Foreground" Value="White" />
+            <Setter Property="HorizontalAlignment" Value="Center" />
+            <Setter Property="Text" Value="Epic Games Launcher" />
+            <Setter Property="TextAlignment" Value="Center" />
+            <Setter Property="Width" Value="48" />
+            <Setter Property="Height" Value="24" />
+            <Setter Property="TextTrimming" Value="CharacterEllipsis" />
+            <Setter Property="TextWrapping" Value="WrapWithOverflow" />
         </Style>
     </Window.Resources>
 
@@ -72,69 +88,93 @@
                 </Grid.ColumnDefinitions>
 
                 <!--  Define Grid Content  -->
-                <Border
-                    x:Name="App1"
+                <StackPanel
                     Grid.Row="0"
                     Grid.Column="0"
-                    Style="{StaticResource AppStyle}" />
-                <Border
-                    x:Name="App2"
+                    Orientation="Vertical">
+                    <Border x:Name="App1" Style="{StaticResource AppStyle}" />
+                    <TextBlock x:Name="App1Text" Style="{StaticResource AppTextStyle}" />
+                </StackPanel>
+                <StackPanel
                     Grid.Row="0"
                     Grid.Column="1"
-                    Style="{StaticResource AppStyle}" />
-                <Border
-                    x:Name="App3"
+                    Orientation="Vertical">
+                    <Border x:Name="App2" Style="{StaticResource AppStyle}" />
+                    <TextBlock x:Name="App2Text" Style="{StaticResource AppTextStyle}" />
+                </StackPanel>
+                <StackPanel
                     Grid.Row="0"
                     Grid.Column="2"
-                    Style="{StaticResource AppStyle}" />
-                <Border
+                    Orientation="Vertical">
+                    <Border x:Name="App3" Style="{StaticResource AppStyle}" />
+                    <TextBlock x:Name="App3Text" Style="{StaticResource AppTextStyle}" />
+                </StackPanel>
+                <StackPanel
                     Grid.Row="1"
                     Grid.Column="0"
-                    Style="{StaticResource AppStyle}">
-                    <Border.RenderTransform>
-                        <TranslateTransform X="{Binding Path=RenderTransform.(TranslateTransform.X), ElementName=App1}" />
-                    </Border.RenderTransform>
-                </Border>
-                <Border
+                    Orientation="Vertical">
+                    <Border x:Name="App4" Style="{StaticResource AppStyle}">
+                        <Border.RenderTransform>
+                            <TranslateTransform X="{Binding Path=RenderTransform.(TranslateTransform.X), ElementName=App1}" />
+                        </Border.RenderTransform>
+                    </Border>
+                    <TextBlock x:Name="App4Text" Style="{StaticResource AppTextStyle}" />
+                </StackPanel>
+                <StackPanel
                     Grid.Row="1"
                     Grid.Column="1"
-                    Style="{StaticResource AppStyle}">
-                    <Border.RenderTransform>
-                        <TranslateTransform X="{Binding Path=RenderTransform.(TranslateTransform.X), ElementName=App2}" />
-                    </Border.RenderTransform>
-                </Border>
-                <Border
+                    Orientation="Vertical">
+                    <Border x:Name="App5" Style="{StaticResource AppStyle}">
+                        <Border.RenderTransform>
+                            <TranslateTransform X="{Binding Path=RenderTransform.(TranslateTransform.X), ElementName=App1}" />
+                        </Border.RenderTransform>
+                    </Border>
+                    <TextBlock x:Name="App5Text" Style="{StaticResource AppTextStyle}" />
+                </StackPanel>
+                <StackPanel
                     Grid.Row="1"
                     Grid.Column="2"
-                    Style="{StaticResource AppStyle}">
-                    <Border.RenderTransform>
-                        <TranslateTransform X="{Binding Path=RenderTransform.(TranslateTransform.X), ElementName=App3}" />
-                    </Border.RenderTransform>
-                </Border>
-                <Border
+                    Orientation="Vertical">
+                    <Border x:Name="App6" Style="{StaticResource AppStyle}">
+                        <Border.RenderTransform>
+                            <TranslateTransform X="{Binding Path=RenderTransform.(TranslateTransform.X), ElementName=App1}" />
+                        </Border.RenderTransform>
+                    </Border>
+                    <TextBlock x:Name="App6Text" Style="{StaticResource AppTextStyle}" />
+                </StackPanel>
+                <StackPanel
                     Grid.Row="2"
                     Grid.Column="0"
-                    Style="{StaticResource AppStyle}">
-                    <Border.RenderTransform>
-                        <TranslateTransform X="{Binding Path=RenderTransform.(TranslateTransform.X), ElementName=App1}" />
-                    </Border.RenderTransform>
-                </Border>
-                <Border
+                    Orientation="Vertical">
+                    <Border x:Name="App7" Style="{StaticResource AppStyle}">
+                        <Border.RenderTransform>
+                            <TranslateTransform X="{Binding Path=RenderTransform.(TranslateTransform.X), ElementName=App1}" />
+                        </Border.RenderTransform>
+                    </Border>
+                    <TextBlock x:Name="App7Text" Style="{StaticResource AppTextStyle}" />
+                </StackPanel>
+                <StackPanel
                     Grid.Row="2"
                     Grid.Column="1"
-                    Style="{StaticResource AppStyle}">
-                    <Border.RenderTransform>
-                        <TranslateTransform X="{Binding Path=RenderTransform.(TranslateTransform.X), ElementName=App2}" />
-                    </Border.RenderTransform>
-                </Border>
-                <Border
+                    Orientation="Vertical">
+                    <Border x:Name="App8" Style="{StaticResource AppStyle}">
+                        <Border.RenderTransform>
+                            <TranslateTransform X="{Binding Path=RenderTransform.(TranslateTransform.X), ElementName=App1}" />
+                        </Border.RenderTransform>
+                    </Border>
+                    <TextBlock x:Name="App8Text" Style="{StaticResource AppTextStyle}" />
+                </StackPanel>
+                <StackPanel
                     Grid.Row="2"
                     Grid.Column="2"
-                    Style="{StaticResource AppStyle}">
-                    <Border.RenderTransform>
-                        <TranslateTransform X="{Binding Path=RenderTransform.(TranslateTransform.X), ElementName=App3}" />
-                    </Border.RenderTransform>
-                </Border>
+                    Orientation="Vertical">
+                    <Border x:Name="App9" Style="{StaticResource AppStyle}">
+                        <Border.RenderTransform>
+                            <TranslateTransform X="{Binding Path=RenderTransform.(TranslateTransform.X), ElementName=App1}" />
+                        </Border.RenderTransform>
+                    </Border>
+                    <TextBlock x:Name="App9Text" Style="{StaticResource AppTextStyle}" />
+                </StackPanel>
             </Grid>
         </Border>
 
